@@ -1,0 +1,7 @@
+{
+  "You are not signed in": "Nie jesteś zalogowany",
+  "Sign in": "Zaloguj",
+  "world": "świecie",
+  "Hello {{world}}": "Witaj {{world}}",
+  "from tRPC": "z tRPC"
+}

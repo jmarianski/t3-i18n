@@ -8,9 +8,12 @@ export const exampleRouter = createRouter()
         text: z.string().nullish(),
       })
       .nullish(),
-    resolve({ input }) {
+    resolve({ input, ctx }) {
+      const { t } = ctx;
+      const world = t("world");
+
       return {
-        greeting: `Hello ${input?.text ?? "world"}`,
+        greeting: t("Hello {{world}}", { world: input?.text ?? world }),
       };
     },
   })

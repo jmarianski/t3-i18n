@@ -3,18 +3,27 @@ import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { withTRPC } from "@trpc/next";
 import { SessionProvider } from "next-auth/react";
-import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
+import Layout from "../components/layout/layout";
 import type { AppRouter } from "../server/router";
+import { appWithTranslation } from "next-i18next";
 import "../styles/globals.css";
+import { AppProps } from "next/app";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
+import { setLangCookie } from "../utils/setCookie";
 
-const MyApp: AppType = ({
+const MyApp = ({
   Component,
   pageProps: { session, ...pageProps },
-}) => {
+}: AppProps) => {
+  const { locale } = useRouter();
+  setLangCookie(locale);
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </SessionProvider>
   );
 };
@@ -54,4 +63,4 @@ export default withTRPC<AppRouter>({
    * @link https://trpc.io/docs/ssr
    */
   ssr: false,
-})(MyApp);
+})(appWithTranslation(MyApp));
